@@ -4,8 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+anyhow = "1.0.98"
 chrono = "0.4.41"
 clap = { version = "4.5.38", features = ["derive"] }
+inquire = "0.7.5"
 opencv = "0.94.4"
 serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.45.0", features = ["full"] }
 youtube_dl = { version = "0.8.0", features = ["downloader"] }
