@@ -49,7 +49,7 @@ jobs:
       - name: Build and Upload Binary
         uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: axum-rest
+          bin: vidvault
           target: ${{ matrix.target }}
           archive: $bin-$target-$tag 
           include: LICENSE,README.md  
