@@ -1,17 +1,17 @@
 use crate::{
-    args::{self, DislodgeParams},
-    etcher,
+    args::DislodgeParams,
+    ethcer,
 };
 
 pub async fn run_dislodge(args: DislodgeParams) -> anyhow::Result<()> {
-    let out_data = etcher::new(
+    let out_data = ethcer::read(
         &args
             .in_path
             .expect("Input path was not provided by the user"),
         1,
     )?;
 
-    etcher::write_bytes(
+    ethcer::write_bytes(
         &args
             .out_path
             .expect("Output path was not provided by the user"),

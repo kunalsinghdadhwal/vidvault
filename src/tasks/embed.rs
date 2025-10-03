@@ -1,6 +1,6 @@
 use crate::{
-    args::{EmbedOutputMode, EmbedParams, EmbedPreset},
-    etcher,
+    args::{EmbedParams, EmbedPreset},
+    ethcer,
     settings::{Data, OutputMode, Settings},
 };
 
@@ -63,7 +63,7 @@ pub async fn run_embed(args: EmbedParams) -> anyhow::Result<()> {
     }
 
     if let Some(fps) = args.fps {
-        settings.fps = fps;
+        settings.fps = fps as f64;
     }
 
     if let Some(threads) = args.threads {
@@ -72,20 +72,20 @@ pub async fn run_embed(args: EmbedParams) -> anyhow::Result<()> {
 
     match out_mode {
         OutputMode::Binary => {
-            let bytes = etcher::rip_bytes(&args.in_path.expect("No path provided in arguments"))?;
+            let bytes = ethcer::rip_bytes(&args.in_path.expect("No path provided in arguments"))?;
 
-            let data = Data::from_color(bytes);
-
-            etcher::etch("output.avi", data, settings)?;
-        }
-        OutputMode::Color => {
-            let bytes = etcher::rip_bytes(&args.in_path.expect("No path provided in arguments"))?;
-
-            let binary = etcher::rip_binary(bytes)?;
+            let binary = ethcer::rip_binary(bytes)?;
 
             let data = Data::from_binary(binary);
 
-            etcher::etch("output.avi", data, settings)?;
+            ethcer::etch("output.avi", data, settings)?;
+        }
+        OutputMode::Color => {
+            let bytes = ethcer::rip_bytes(&args.in_path.expect("No path provided in arguments"))?;
+
+            let data = Data::from_color(bytes);
+
+            ethcer::etch("output.avi", data, settings)?;
         }
     }
 

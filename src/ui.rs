@@ -2,7 +2,7 @@ use std::vec;
 
 use anyhow::{self, Ok};
 
-use inquire::{Confirm, CustomType, Input, MultiSelect, Password, Select, Text, min_length};
+use inquire::{CustomType, Select, Text};
 
 use crate::args::{Commands, DislodgeParams, DownloadParams, EmbedParams};
 
@@ -120,7 +120,7 @@ async fn enrich_embed_params(mut args: EmbedParams) -> anyhow::Result<EmbedParam
             .with_default(8)
             .prompt()?;
 
-        args.threads = Some(threads);
+        args.threads = Some(threads as usize);
     }
 
     if args.fps.is_none() {
