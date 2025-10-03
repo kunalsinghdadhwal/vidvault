@@ -1,6 +1,6 @@
 use std::{fs, i32, thread, u32, vec};
 
-use anyhow::{anyhow, Result as AnyhowResult};
+use anyhow::{Result as AnyhowResult, anyhow};
 
 use opencv::core::Mat;
 use opencv::prelude::*;
@@ -38,11 +38,7 @@ pub fn rip_binary(byte_data: Vec<u8>) -> anyhow::Result<Vec<bool>> {
     }
 
     println!("Binary Ripped Successfully");
-    println!(
-        "Converted {} bytes to {} bits",
-        byte_len,
-        binary_data.len()
-    );
+    println!("Converted {} bytes to {} bits", byte_len, binary_data.len());
     Ok(binary_data)
 }
 
@@ -63,11 +59,7 @@ pub fn rip_binary_u32(bytes: Vec<u32>) -> anyhow::Result<Vec<bool>> {
     }
 
     println!("Binary Ripped Successfully");
-    println!(
-        "Converted {} bytes to {} bits",
-        byte_len,
-        binary_data.len()
-    );
+    println!("Converted {} bytes to {} bits", byte_len, binary_data.len());
     Ok(binary_data)
 }
 
@@ -175,7 +167,7 @@ fn etch_color(
             *global_index += 3;
 
             if *global_index + 2 >= data.len() {
-                return Err(Error::msg("Index Beyond Data"));
+                return Err(anyhow!("Index Beyond Data"));
             }
         }
     }
@@ -204,7 +196,7 @@ fn etch_bw(
             etch_pixel(source, x, y, rgb).unwrap();
             *global_index += 1;
             if *global_index >= data.len() {
-                return Err(Error::msg("Index Beyond Data"));
+                return Err(anyhow!("Index Beyond Data"));
             }
         }
     }
@@ -455,7 +447,7 @@ pub fn etch(path: &str, data: Data, settings: Settings) -> anyhow::Result<()> {
     let fourcc = VideoWriter::fourcc('p', 'n', 'g', ' ')?;
 
     let frame_size = complete_frames[1].frame_size;
-    let mut video = VideoWriter::new(path, fourcc, settings.fps, frame_size, true);
+    let video = VideoWriter::new(path, fourcc, settings.fps, frame_size, true);
 
     let mut video = match video {
         AnyhowResult::Ok(v) => v,
